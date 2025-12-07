@@ -1,364 +1,536 @@
 /* ================== 字体 ================== */
 @font-face {
-  font-family: "Microsoft Yahei UI.ttf";
-  font-weight: 1 999;
-  src: url("../font/Microsoft Yahei UI.ttf");
+  font-family: "Microsoft Yahei UI.ttf";
+  font-weight: 1 999;
+  src: url("../font/Microsoft Yahei UI.ttf");
 }
 
 @font-face {
-  font-family: "Microsoft Yahei UI";
-  src: url("../font/Microsoft Yahei UI.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+  font-family: "Microsoft Yahei UI";
+  src: url("../font/Microsoft Yahei UI.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* 全局字体 */
 html, body, * {
-  font-family: "Microsoft Yahei UI", sans-serif !important;
+  font-family: "Microsoft Yahei UI", sans-serif !important;
 }
 
 /* ================== 页面基础布局 ================== */
 
 html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* 避免滚动条出现，如有需要可改为 overflow-x: hidden; */
 }
 
 /* 背景容器 */
 .background {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* 移除纯色渐变，只保留视频背景 */
-  background-image: none;
-  overflow: hidden;
+  position: relative; /* 子元素定位基准 */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to bottom left, #ff99e5, #ffffff);
+  overflow: hidden;
 }
 
 /* 背景视频 */
 .background-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0; /* 最底层 */
 }
 
-/* ================== 信息板 / 倒计时卡片 ================== */
+/* ================== 核心内容布局（替代原 .info / .info .time）================== */
 
-/* 信息板主容器（桌面 / 大屏） */
-.info {
-  position: relative;
-  width: min(1200px, 90vw);
-  aspect-ratio: 16 / 9;
-  height: auto;
+/* 核心内容容器：使内容保持居中并占据一定比例 */
+.content {
+  position: relative;
+  z-index: 1; /* 在视频上 */
+  /* 允许内容占据屏幕的 90%，最大宽度为 1200px */
+  width: min(1200px, 90vw); 
+  height: 100%; /* 占满背景容器高度以便居中对齐 */
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 关键：让标题、数字区、副标题、徽章等在纵向均匀铺开 */
+  justify-content: space-between;
 
-  /* === 移除卡片外观：圆角和阴影 === */
-  border-radius: 0;
-  box-shadow: none;
-  /* ================================= */
-
-  z-index: 1;
-  display: flex;
-  overflow: hidden;
-}
-
-/* 覆盖层渐变 */
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  /* === 移除背景，实现透明效果 === */
-  background: transparent; 
-  /* =========================== */
-}
-
-/* 左右渐变覆盖层（预留） */
-.info .left-box,
-.info .right-box {
-  height: 100%;
-  top: 0;
-  position: relative;
-  z-index: 2;
+  /* 给上下左右一点内边距，避免贴边太紧 */
+  padding: clamp(24px, 4vh, 40px) clamp(24px, 4vw, 48px);
+  box-sizing: border-box;
 }
 
 /* 小屏（手机）专用布局覆盖 */
 @media (max-width: 768px) {
-  .info {
-    width: 100vw;
-    border-radius: 0;
-    aspect-ratio: auto;
-    height: auto;
-  }
+  .content {
+    width: 100vw;      /* 左右贴边 */
+    height: auto;      /* 高度按内容自动撑开 */
+    padding: 16px 12px 20px;
+  }
 }
 
-/* ================== 倒计时内容布局 ================== */
-
-/* 桌面端 / 默认布局 */
-.info .time {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: clamp(24px, 4vh, 40px) clamp(24px, 4vw, 48px);
+/* 渐变覆盖层（现改为直接覆盖在视频上） */
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* 遮盖视频，但低于主要内容 */
+  background: linear-gradient(to right, rgba(255, 189, 238, 0.555), rgba(255, 193, 193, 0.541));
+  pointer-events: none; /* 允许点击穿透到下面的元素 */
 }
 
 
-/* 手机端：改为正常流式布局，从上往下排，不居中压缩 */
-@media (max-width: 768px) {
-  .info .time {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 16px 12px 20px;
-  }
-}
-
-
-.info .time .title {
-  font-family: "Microsoft Yahei UI";
-  color: white;
-  letter-spacing: 2px;
-  font-size: clamp(18px, 2.4vw, 24px);
+.content .title {
+  font-family: "Microsoft Yahei UI";
+  color: white;
+  letter-spacing: 2px;
+  font-size: clamp(18px, 2.4vw, 24px);
 }
 
 /* 数字整体区域 */
-.info .time .time-box {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.content .time-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 
-  width: 90%;
-  max-width: 1000px;
+  /* 占整个内容区域的 90% 宽度，最大不超过 1000px */
+  width: 90%;
+  max-width: 1000px;
 
-  height: 60%;
+  /* 高度由内容撑开，不写死像素 */
+  height: 60%;
 
-  margin-bottom: clamp(16px, 4vw, 48px);
+  margin-bottom: clamp(16px, 4vw, 48px);
 }
 
 /* 手机端如果宽度实在太窄，允许自动换行 */
 @media (max-width: 480px) {
-  .info .time .time-box {
-    flex-wrap: wrap;
-    row-gap: 8px;
-  }
+  .content .time-box {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
 }
 
-.info .time .time-box div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 22%;
-  height: auto;
+.content .time-box div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 22%;
+  height: auto;
 }
 
 /* 数字本体 */
-.info .time .time-box div p {
-  font-family: "Microsoft Yahei UI", sans-serif;
-  font-weight: 500;
-  font-size: clamp(60px, 15vw, 150px);
-  margin: 0;
+.content .time-box div p {
+  font-family: "Microsoft Yahei UI", sans-serif;
+  font-weight: 500;
+  font-size: clamp(60px, 15vw, 150px);
+  margin: 0;
 
-  color: #ffffff;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgba(255, 180, 180, 0.55);
+  /* 主体白色要清晰可见 */
+  color: #ffffff;
+  /* 很轻的外描边，不抢主体 */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255, 180, 180, 0.55);
 
-  text-stroke: 1px rgba(255, 180, 180, 0.55);
+  text-stroke: 1px rgba(255, 180, 180, 0.55);
 }
 
 
 /* 数字下面的单位文字（days / hours / min / sec） */
-.info .time .time-box div span {
-  color: rgb(255, 255, 255);
-  font-size: clamp(20px, 4.4vw, 32px);
-  letter-spacing: 8px;
-  opacity: 0.8;
+.content .time-box div span {
+  color: rgb(255, 255, 255);
+  font-size: clamp(20px, 4.4vw, 32px);
+  letter-spacing: 8px;
+  opacity: 0.8;
 }
 
 /* 副标题 */
-.info .time .sub-title {
-  font-family: "Microsoft Yahei UI";
-  color: rgb(255, 255, 255);
-  font-size: clamp(14px, 2vw, 20px);
-  letter-spacing: 4px;
-  margin: 0;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
-  text-stroke: 1px rgba(255, 255, 255, 0.21);
+.content .sub-title {
+  font-family: "Microsoft Yahei UI";
+  color: rgb(255, 255, 255);
+  font-size: clamp(14px, 2vw, 20px);
+  letter-spacing: 4px;
+  margin: 0;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15);
+  text-stroke: 1px rgba(255, 255, 255, 0.21);
 }
 
-.info .time .sub-title.tips {
-  margin: 16px;
+.content .sub-title.tips {
+  margin: 16px;
 }
 
-/* ================== 语言切换 ================== */
+/* ================== 语言切换（调整为绝对定位到屏幕右上角） ================== */
 
 .lang-switch {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: clamp(14px, 2.4vw, 20px);
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-  z-index: 100;
-  user-select: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: clamp(14px, 2.4vw, 20px);
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 100;
+  user-select: none;
 }
 
 .lang-switch span {
-  padding: 0 5px;
+  padding: 0 5px;
 }
 
 .lang-switch span:hover {
-  text-decoration: underline;
+  text-decoration: underline;
 }
 
-/* ================== 音乐按钮 ================== */
+/* ================== 音乐按钮（调整为绝对定位到屏幕右下角） ================== */
 
-/* 桌面端：定位在倒计时框右下角 */
+/* 桌面端：定位在屏幕右下角 */
 .music-control {
-  position: absolute;
-  bottom: 20px;
-  right: 40px;
-  z-index: 10;
+  position: absolute;
+  bottom: 20px;
+  right: 40px;
+  z-index: 10;
 }
 
 .music-control img {
-  width: clamp(32px, 6vw, 55px);
-  height: clamp(32px, 6vw, 55px);
-  cursor: pointer;
-  border-radius: 50%;
-  background-color: rgba(255, 137, 137, 0.25);
-  padding: 6px;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  width: clamp(32px, 6vw, 55px);
+  height: clamp(32px, 6vw, 55px);
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: rgba(255, 137, 137, 0.25);
+  padding: 6px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .music-control img:hover {
-  transform: scale(1.1);
-  background-color: rgba(255, 137, 137, 0.4);
+  transform: scale(1.1);
+  background-color: rgba(255, 137, 137, 0.4);
 }
 
-/* 手机端：取消绝对定位，变成正常流式元素，靠右对齐，避免和邮件按钮重叠 */
+/* 手机端：仍然保持屏幕右下角定位，但位置微调 */
 @media (max-width: 768px) {
-  .music-control {
-    position: static;
-    align-self: flex-end;
-    margin-top: 8px;
-    margin-right: 4px;
-  }
+  .music-control {
+    position: absolute; /* 保持绝对定位，在内容之外 */
+    bottom: 12px;
+    right: 12px;
+  }
+  
+  .music-control img {
+     /* 尺寸微调 */
+    width: clamp(24px, 8vw, 40px);
+    height: clamp(24px, 8vw, 40px);
+    
+    /* 加一点阴影，让它有按钮质感 */
+    box-shadow:
+      0 4px 10px rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
 }
 
-/* ================== Intro 黑屏遮罩 / Code Overlay / 徽章 / 页脚 (保持不变) ================== */
+/* ================== Intro 黑屏遮罩... (其余部分不变) ================== */
+/* 省略未修改的后续部分，包括 Intro, Code Overlay, Meta Badge 和 Footer 样式 */
 
 @keyframes icp-fadein {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #intro {
-  position: fixed; inset: 0; background: #000; color: #fff; z-index: 9999;
-  display: flex; align-items: center; justify-content: center; opacity: 1; transition: opacity 800ms ease;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  z-index: 9999;           /* 保证在最上层 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 800ms ease; /* 淡出时间 */
 }
 
-#intro.hidden { opacity: 0; pointer-events: none; }
-.intro-inner { text-align: center; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; letter-spacing: .08em; }
-.intro-line { font-size: clamp(18px, 3vw, 28px); white-space: nowrap; }
+#intro.hidden {
+  opacity: 0;
+  pointer-events: none; /* 淡出中禁用点击 */
+}
+
+.intro-inner {
+  text-align: center;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: .08em;
+}
+
+.intro-line {
+  font-size: clamp(18px, 3vw, 28px);
+  white-space: nowrap;
+}
 
 /* 打字样 “...”：逐步出现 0/1/2/3 个点 */
-.dots::after { content: ""; display: inline-block; width: 0; animation: dotsTyping 1.2s steps(4, end) infinite; }
+.dots::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  animation: dotsTyping 1.2s steps(4, end) infinite;
+}
+
 @keyframes dotsTyping {
-  0%   { content: "";   } 25%  { content: ".";  } 50%  { content: ".."; } 75%  { content: "...";} 100% { content: "";   }
+  0%   { content: "";  }
+  25%  { content: "."; }
+  50%  { content: ".."; }
+  75%  { content: "...";}
+  100% { content: "";  }
 }
 
 /* 复古终端风的方块光标闪烁 */
 .caret {
-  display: inline-block; width: .6ch; height: 1em; background: #fff; margin-left: .1ch; transform: translateY(.12em);
-  animation: caretBlink 1s steps(1, end) infinite;
+  display: inline-block;
+  width: .6ch;
+  height: 1em;
+  background: #fff;
+  margin-left: .1ch;
+  transform: translateY(.12em);
+  animation: caretBlink 1s steps(1, end) infinite;
 }
-@keyframes caretBlink { 0%, 50%   { opacity: 1; } 50.01%,100% { opacity: 0; } }
 
-.intro-hint { margin-top: 12px; font-size: 0.9em; opacity: .65; }
-body.no-scroll { overflow: hidden; }
-@media (prefers-reduced-motion: reduce) { #intro { transition: none; } .dots::after, .caret { animation: none; } }
+@keyframes caretBlink {
+  0%, 50%    { opacity: 1; }
+  50.01%,100% { opacity: 0; }
+}
+
+.intro-hint {
+  margin-top: 12px;
+  font-size: 0.9em;
+  opacity: .65;
+}
+
+/* 盖屏期间禁止滚动 */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* 尊重“减少动态效果”系统设置 */
+@media (prefers-reduced-motion: reduce) {
+  #intro { transition: none; }
+  .dots::after, .caret { animation: none; }
+}
+
+/* ================== Code Overlay（代码输出层） ================== */
 
 .code-overlay {
-  position: fixed; left: 1rem; bottom: 1rem; top: auto; width: auto; width: -moz-fit-content; width: fit-content; max-width: none; overflow-x: visible;
-  max-height: 100vh; padding: 20px 20px; background: transparent !important; border: none !important; box-shadow: none !important; backdrop-filter: none !important;
-  mask-image: none !important; -webkit-mask-image: none !important; color: rgba(255, 157, 157, 0.5);
-  font: 700 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; z-index: 1; pointer-events: none; overflow-y: auto;
-  scrollbar-width: none; -ms-overflow-style: none;
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  top: auto;
+
+  /* 宽度由内容自适应（不设上限） */
+  width: auto;             /* 回退值 */
+  width: -moz-fit-content;     /* 兼容旧版 Firefox */
+  width: fit-content;        /* 现代浏览器 */
+  max-width: none;
+  overflow-x: visible;
+
+  max-height: 100vh;
+  padding: 20px 20px;
+
+  /* 透明化 + 无容器阴影 */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+
+  color: rgba(255, 157, 157, 0.5);
+
+  font: 700 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  z-index: 1;
+  pointer-events: none;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.code-overlay::-webkit-scrollbar { display: none; }
+.code-overlay::-webkit-scrollbar {
+  display: none;
+}
+
+/* 代码行：自动换行 + 红色发光 */
 #code-stream .line {
-  white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word;
-  text-shadow: 0 0 8px rgba(255,100,100,.45), 0 0 2px rgba(255,100,100,.6);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-shadow:
+    0 0 8px rgba(255,100,100,.45),
+    0 0 2px rgba(255,100,100,.6);
 }
-@media (max-width: 900px){ .code-overlay{ display:block !important; } }
-@media (max-width: 900px) and (orientation: landscape){ .code-overlay{ left: .75rem; bottom: .75rem; max-height: 100vh; font-size: 12px; } }
-@media (max-width: 900px) and (orientation: portrait){ .code-overlay{ left: .75rem; bottom: .75rem; max-height: 100vh; font-size: 12px; } }
 
-.meta-row { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-.meta-row .visit-counter { height: 28px; vertical-align: middle; image-rendering: pixelated; border-radius: 4px; user-select: none; opacity: 0.5; }
+/* 让手机也显示代码输出层 */
+@media (max-width: 900px){
+  .code-overlay{ 
+    display:block !important;
+  }
+}
+
+/* 手机横/竖屏时只调小字号，不再限制高度 */
+@media (max-width: 900px) and (orientation: landscape){
+  .code-overlay{
+    left: .75rem;
+    bottom: .75rem;
+    /* 不限制 max-height，让它继续用 100vh */
+    max-height: 100vh;
+    font-size: 12px;
+  }
+}
+@media (max-width: 900px) and (orientation: portrait){
+  .code-overlay{
+    left: .75rem;
+    bottom: .75rem;
+    /* 同上，铺满屏高 */
+    max-height: 100vh;
+    font-size: 12px;
+  }
+}
+
+
+/* ================== ICP / 邮箱 / 访问计数 徽章 ================== */
+
+/* 容器，控制并排与换行 */
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;         /* 徽章之间的间距 */
+  flex-wrap: wrap;       /* 小屏自动换行 */
+  margin-top: 12px;
+}
+
+.meta-row .visit-counter {
+  height: 28px; /* 调整计数器图的高度 */
+  vertical-align: middle;
+  image-rendering: pixelated;
+  border-radius: 4px;
+  user-select: none;
+  opacity: 0.5;
+}
+
+/* 通用徽章样式（玻璃拟态 + 圆角胶囊） */
 .meta-badge {
-  display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 9999px; font-size: 1rem; line-height: 1; text-decoration: none; color: #fff;
-  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.22); backdrop-filter: blur(6px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 9999px;   /* 胶囊形状 */
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  transition:
+    transform .15s ease,
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
 }
+
+/* 悬停/聚焦反馈 */
 .meta-badge:hover {
-  transform: translateY(-1px); background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
-.meta-badge:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35), 0 8px 24px rgba(0, 0, 0, 0.35); }
+
+.meta-badge:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* 细节微调 */
 .meta-badge svg { display: block; }
 .meta-badge.icp { letter-spacing: .2px; }
-@media (max-width: 420px) { .meta-row { gap: 8px; } .meta-badge { font-size: 0.8rem; padding: 6px 10px; } }
+
+/* 小屏优化 */
+@media (max-width: 420px) {
+  .meta-row { gap: 8px; }
+  .meta-badge { font-size: 0.8rem; padding: 6px 10px; }
+}
+
+/* ================== 页脚版权声明 ================== */
 
 .footer {
-  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 90%; text-align: center;
-  font-size: 14px; color: rgba(255, 188, 188, 0.9); background: transparent; line-height: 1.4;
-  font-family: "Microsoft Yahei UI", "Microsoft Yahei UI", sans-serif; user-select: none; pointer-events: none;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(255, 188, 188, 0.9);
+  background: transparent;
+  line-height: 1.4;
+  font-family: "Microsoft Yahei UI", "Microsoft Yahei UI", sans-serif;
+  user-select: none;
+  pointer-events: none; /* 避免干扰点击 */
 }
 
-.counter-box { display: inline-flex; align-items: center; gap: 4px; }
-.counter-label { font-size: clamp(12px, 1.8vw, 18px); color: rgba(255, 255, 255, 0.7); user-select: none; }
-.visit-counter { filter: brightness(1.1); vertical-align: middle; }
-
-@media (max-width: 768px) {
-  .music-control { position: static; align-self: center; margin-top: 8px; margin-right: 0; }
-  .music-control img {
-    width: clamp(20px, 8vw, 32px); height: clamp(20px, 8vw, 32px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
-  }
+/* 访问计数文字+图标 */
+.counter-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
-video::-webkit-media-controls { display: none !important; }
-video::-webkit-media-controls-enclosure { display: none !important; }
-video::-webkit-media-controls-panel { display: none !important; }
+.counter-label {
+  font-size: clamp(12px, 1.8vw, 18px);
+  color: rgba(255, 255, 255, 0.7);
+  user-select: none;
+}
+
+.visit-counter {
+  filter: brightness(1.1);
+  vertical-align: middle;
+}
+
+/* ==== 视频控件隐藏 ==== */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+  display: none !important;
+}
