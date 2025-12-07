@@ -74,7 +74,7 @@ $(function () {
       countingUp: "♪"
     },
     zh: {
-      title: "Our 28-Year Promise: I Will Be There.",
+      title: "28年之约 绝不失约",
       subTitle1: "「这次，与我一起……」",
       subTitle2: "「为故事写下新的篇章吧♪」",
       days: "days",
@@ -281,3 +281,4 @@ document.addEventListener('WeixinJSBridgeReady', function () {
   // 如果想在微信里也自动播音乐，可以取消下面这行注释
   // window.playBgMusic();
 }, false);
+
