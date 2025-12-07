@@ -23,24 +23,27 @@
       <div class="intro-hint" aria-hidden="true">Please Press Any Key♪</div>
     </div>
   </div>
-  
-  <div class="background">
-    <video
-        id="bg-video"
-        class="background-video"
-        src="resources/images/cyrene.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        webkit-playsinline
-        x5-playsinline="true"
-        x5-video-player-type="h5"
-        x5-video-orientation="portrait"
-        preload="auto"
-        disablepictureinpicture
-        controlsList="nodownload nofullscreen noremoteplayback"
-    ></video>
+  <div class="background">
+<video
+  id="bg-video"
+  class="background-video"
+
+  src="resources/images/cyrene.mp4"
+
+  autoplay
+  muted
+  loop
+
+  playsinline
+  webkit-playsinline
+  x5-playsinline="true"
+  x5-video-player-type="h5"
+  x5-video-orientation="portrait"
+
+  preload="auto"
+  disablepictureinpicture
+  controlsList="nodownload nofullscreen noremoteplayback"
+></video>
 
 
     <div class="info">
@@ -108,14 +111,14 @@
           </div>
         </div>
 
-                <div class="music-control">
+        <div class="music-control">
           <img id="music-btn" src="resources/images/musicon.webp" alt="Music Toggle">
         </div>
       </div>
     </div>
   </div>
-  
-    <audio id="bg-music" preload="none" loop muted>
+  
+  <audio id="bg-music" preload="none" loop muted> 
     <source src="resources/audio/true.mp3" type="audio/mpeg">
   </audio>
 
@@ -129,36 +132,41 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 注意：HTML 中的音频 ID 是 bg-music，不是 background-music
         const audio = document.getElementById('bg-music');
         const volumeButton = document.getElementById('music-btn');
-
-        // 初始化图标状态 (假设默认图标 musicon.webp 是有声的，我们应该使用静音图标)
-        // 建议：将默认图标改为静音图标 (如 mute.webp)，此处代码假定 musicon.webp = 静音
         
+        // 确保 audio.play() 是在用户点击后执行，这是最可靠的方式
         volumeButton.addEventListener('click', function() {
             if (audio.muted) {
-                // 如果是静音，则取消静音
                 audio.muted = false;
-                audio.play().catch(error => {
-                    console.error("Play failed after click:", error);
-                });
                 
-                // 更改图标为有声状态 (假设您的有声图标是 musicon.webp 或类似)
-                // 这里应该改为您实际的有声图标路径
+                // 强制播放
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.error("Audio playback failed after click:", error);
+                    });
+                }
+                
+                // 假设 musicon.webp 是**有声**图标， mute.webp 是**静音**图标
                 volumeButton.src = 'resources/images/musicon.webp'; 
                 volumeButton.alt = 'Music On';
 
             } else {
-                // 如果有声，则设为静音
                 audio.muted = true;
-                audio.pause(); // 暂停播放，而不是只是静音，以节省资源
-
-                // 更改图标为静音状态 (这里应该改为您实际的静音图标路径)
+                audio.pause(); // 暂停播放
+                
                 volumeButton.src = 'resources/images/mute.webp'; 
                 volumeButton.alt = 'Music Off';
             }
         });
+        
+        // 初始状态检查：如果音乐是 muted，应显示静音图标 (假设 mute.webp 是静音图标)
+        // 首次加载时，确保显示静音图标
+        if (audio.muted) {
+             volumeButton.src = 'resources/images/mute.webp'; 
+             volumeButton.alt = 'Music Off';
+        }
     });
   </script>
 </body>
