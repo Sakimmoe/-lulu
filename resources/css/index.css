@@ -36,8 +36,8 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* 💙 更改为蓝色调渐变 */
-  background-image: linear-gradient(to bottom left, #99cfff, #ffffff);
+  /* 💜 更改为微凉的淡紫色渐变 */
+  background-image: linear-gradient(to bottom left, #c5b3e2, #ffffff);
   overflow: hidden;
 }
 
@@ -91,8 +91,8 @@ html, body {
   width: 100%;
   height: 100%;
   z-index: 0; /* 遮盖视频，但低于主要内容 */
-  /* 💙 更改为蓝色调覆盖 */
-  background: linear-gradient(to right, rgba(189, 219, 255, 0.555), rgba(193, 210, 255, 0.541));
+  /* 💜 更改为淡紫/淡青色覆盖 */
+  background: linear-gradient(to right, rgba(200, 189, 255, 0.555), rgba(193, 210, 255, 0.541));
   pointer-events: none; /* 允许点击穿透到下面的元素 */
 }
 
@@ -141,11 +141,11 @@ html, body {
   margin: 0;
 
   color: #ffffff;
-  /* 💙 更改为蓝色调描边 */
+  /* 💜 更改为淡紫色调描边 */
   -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgba(180, 219, 255, 0.55);
+  -webkit-text-stroke-color: rgba(180, 180, 255, 0.55);
 
-  text-stroke: 1px rgba(180, 219, 255, 0.55);
+  text-stroke: 1px rgba(180, 180, 255, 0.55);
 }
 
 
@@ -209,16 +209,16 @@ html, body {
   height: clamp(32px, 6vw, 55px);
   cursor: pointer;
   border-radius: 50%;
-  /* 💙 更改为蓝色调透明背景 */
-  background-color: rgba(137, 189, 255, 0.25);
+  /* 💜 更改为淡紫色调透明背景 */
+  background-color: rgba(180, 137, 255, 0.25);
   padding: 6px;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .music-control img:hover {
   transform: scale(1.1);
-  /* 💙 更改为蓝色调透明背景 (hover) */
-  background-color: rgba(137, 189, 255, 0.4);
+  /* 💜 更改为淡紫色调透明背景 (hover) */
+  background-color: rgba(180, 137, 255, 0.4);
 }
 
 /* 手机端：仍然保持屏幕右下角定位，但位置微调 */
@@ -358,8 +358,8 @@ body.no-scroll {
   mask-image: none !important;
   -webkit-mask-image: none !important;
 
-  /* 💙 更改为蓝色调文字颜色 */
-  color: rgba(157, 215, 255, 0.5);
+  /* 💜 更改为浅紫色/淡青色调文字颜色 */
+  color: rgba(157, 180, 255, 0.5);
 
   font: 700 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   z-index: 1;
@@ -373,15 +373,15 @@ body.no-scroll {
   display: none;
 }
 
-/* 代码行：自动换行 + 红色发光 */
+/* 代码行：自动换行 + 浅紫发光 */
 #code-stream .line {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   word-break: break-word;
-  /* 💙 更改为蓝色调发光 */
+  /* 💜 更改为浅紫色/淡青色调发光 */
   text-shadow:
-    0 0 8px rgba(100,200,255,.45),
-    0 0 2px rgba(100,200,255,.6);
+    0 0 8px rgba(100,100,255,.45),
+    0 0 2px rgba(100,100,255,.6);
 }
 
 /* 让手机也显示代码输出层 */
@@ -497,8 +497,8 @@ body.no-scroll {
   width: 90%;
   text-align: center;
   font-size: 14px;
-  /* 💙 更改为蓝色调文字颜色 */
-  color: rgba(188, 225, 255, 0.9);
+  /* 💜 更改为淡紫色/浅蓝色调文字颜色 */
+  color: rgba(188, 188, 255, 0.9);
   background: transparent;
   line-height: 1.4;
   font-family: "Microsoft Yahei UI", "Microsoft Yahei UI", sans-serif;
