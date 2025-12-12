@@ -32,10 +32,64 @@ window.pauseBgMusic = function () {
   if (btn) btn.setAttribute('src', 'resources/images/musicoff.webp');
 };
 
+// ==========================================================
+// === 新增：背景视频源动态切换逻辑 ===
+// ==========================================================
+/**
+ * 动态加载背景视频源：
+ * - 屏幕宽度 <= 768px: 使用 data-mobile-src (lulu.mp4)
+ * - 屏幕宽度 > 768px: 使用 data-desktop-src (cyrene.mp4)
+ */
+function setBackgroundVideoSource() {
+    const videoElement = document.getElementById('bg-video');
+    // 如果找不到视频元素或没有 data 属性，则退出
+    if (!videoElement || !videoElement.hasAttribute('data-desktop-src')) return;
+
+    // 假设手机/平板的断点为 768px
+    const isMobileOrTablet = window.innerWidth <= 768; 
+    
+    // 获取 data- 属性中的视频路径
+    const desktopSrc = videoElement.getAttribute('data-desktop-src');
+    const mobileSrc = videoElement.getAttribute('data-mobile-src');
+    
+    // 根据设备类型选择视频源
+    const newSrc = isMobileOrTablet ? mobileSrc : desktopSrc;
+
+    // 只有在新源和旧源不一致时才更新，避免不必要的加载
+    if (videoElement.src.indexOf(newSrc) === -1) {
+        // 记录当前的播放时间，以便切换后从相同位置继续播放
+        const currentTime = videoElement.currentTime;
+        
+        // 暂停、更改源
+        videoElement.pause();
+        videoElement.src = newSrc;
+        
+        // 重新加载并设置播放时间，然后尝试播放
+        videoElement.load();
+        videoElement.currentTime = currentTime;
+
+        // 注意：这里不立即调用 .play()，而是留给后面的 tryPlayBgVideo / Intro 逻辑去处理
+    }
+}
+
+// 首次加载时执行，确保视频源设置完毕
+setBackgroundVideoSource();
+
+// 监听窗口大小变化（例如，设备从横屏切换到竖屏）时执行
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    // 使用 debounce 避免频繁触发
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(setBackgroundVideoSource, 200);
+});
+
 // === 全局：背景视频自动播放 / 兼容微信 / 各类 WebView ===
 window.tryPlayBgVideo = function () {
   const v = document.getElementById('bg-video');
   if (!v) return;
+
+  // 确保在尝试播放前视频源已设置
+  setBackgroundVideoSource(); 
 
   // 防止不同浏览器解释不同大小写
   v.muted = true;
@@ -244,6 +298,10 @@ $(function () {
         // 手动关闭时一定是手势回调里，直接播音乐
         window.playBgMusic();
       }
+      
+      // *** 确保在播放前设置好视频源 ***
+      setBackgroundVideoSource(); 
+      // *** END OF CHANGE ***
 
       // 不论自动还是手动关闭 Intro，都再尝试一次播放背景视频
       window.tryPlayBgVideo();
@@ -275,6 +333,10 @@ $(function () {
 
 // === 微信内置浏览器专用：桥接事件触发媒体播放 ===
 document.addEventListener('WeixinJSBridgeReady', function () {
+  // *** 确保在播放前设置好视频源 ***
+  setBackgroundVideoSource();
+  // *** END OF CHANGE ***
+
   // 尝试播放背景视频（微信会在这个时机允许播放）
   window.tryPlayBgVideo();
 
