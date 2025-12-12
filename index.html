@@ -1,88 +1,112 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>28年后 你还会想起我吗</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="resources/css/index.css">
-    <link rel="icon" href="resources/images/logo.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>28年后 你还会想起我吗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="resources/css/index.css">
+  <link rel="icon" href="resources/images/logo.png" type="image/png">
 </head>
 <body>
-    <div id="intro">
-        <div class="intro-inner" role="dialog" aria-label="Intro">
-            <div class="intro-line">
-                <span>Hello World</span>
-                <span class="dots" aria-hidden="true"></span>
-                <span class="caret" aria-hidden="true"></span>
-            </div>
-            <div class="intro-hint" aria-hidden="true">Please Press Any Key♪</div>
-        </div>
-    </div>
+  <div id="intro">
+    <div class="intro-inner" role="dialog" aria-label="Intro">
+      <div class="intro-line">
+        <span>Hello World</span>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="caret" aria-hidden="true"></span>
+      </div>
+      <div class="intro-hint" aria-hidden="true">Please Press Any Key♪</div>
+    </div>
+  </div>
+  <div class="background">
+    <video
+      id="bg-video"
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      webkit-playsinline
+      x5-playsinline="true"
+      x5-video-player-type="h5"
+      x5-video-orientation="portrait"
+      preload="auto"
+      disablepictureinpicture
+      controlsList="nodownload nofullscreen noremoteplayback"
+      
+      data-desktop-src="resources/images/cyrene.mp4"
+      data-mobile-src="resources/images/lulu.mp4"
+      src="resources/images/cyrene.mp4"
+    ></video>
+        
+    <div class="lang-switch">
+      <span id="switch-en" role="button" tabindex="0">EN</span> |
+      <span id="switch-zh" role="button" tabindex="0">ZH</span>
+    </div>
+        
+    <div class="gradient-overlay"></div>
+        
+    <div class="content">
+            <h2 class="title">H E L L O &nbsp; W O R L D</h2>
 
-    <div class="background">
-        <video
-            id="bg-video"
-            class="background-video"
-            autoplay
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            x5-playsinline="true"
-            x5-video-player-type="h5"
-            preload="auto"
-            disablepictureinpicture
-            controlsList="nodownload nofullscreen noremoteplayback"
-            data-desktop-src="resources/images/cyrene.mp4"
-            data-mobile-src="resources/images/lulu.mp4"
-            src="resources/images/cyrene.mp4">
-        </video>
-        
-        <div class="lang-switch">
-            <span id="switch-en" role="button" tabindex="0">EN</span> |
-            <span id="switch-zh" role="button" tabindex="0">ZH</span>
-        </div>
-        
-        <div class="gradient-overlay"></div>
-        
-        <div class="content">
-            <h2 class="title">H E L L O &nbsp; W O R L D</h2>
-            <div class="time-box">
-                <div class="days"><p class="day value">00</p><span class="text">days</span></div>
-                <div class="hours"><p class="hour value">00</p><span class="text">hours</span></div>
-                <div class="mins"><p class="min value">00</p><span class="text">min</span></div>
-                <div class="secs"><p class="sec value">00</p><span class="text">sec</span></div>
-            </div>
-            <p class="sub-title">「This time, together with me…」</p>
-            <p class="sub-title">「Let’s write a new chapter of the story♪」</p>
-            <p class="sub-title tips"></p>
-        </div>
-        
-        <div class="meta-row">
-            <div class="icp-box">
-                <a class="meta-badge icp" href="https://icp.gov.moe/?keyword=20257728" target="_blank">萌ICP备20257728号</a>
-            </div>
-            <a class="meta-badge email" href="mailto:762930756@qq.com">
-                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z" fill="currentColor"/></svg>
-                <span>762930756@qq.com</span>
-            </a>
-        </div>
-        
-        <div class="music-control">
-            <img id="music-btn" src="resources/images/musicon.webp" alt="Music Toggle">
-        </div>
-    </div>
+      <div class="time-box">
+        <div class="days">
+          <p class="day value">00</p>
+          <span class="text">days</span>
+        </div>
+        <div class="hours">
+          <p class="hour value">00</p>
+          <span class="text">hours</span>
+        </div>
+        <div class="mins">
+          <p class="min value">00</p>
+          <span class="text">min</span>
+        </div>
+        <div class="secs">
+          <p class="sec value">00</p>
+          <span class="text">sec</span>
+        </div>
+      </div>
 
-    <audio id="bg-music" preload="none" loop>
-        <source src="resources/audio/true.mp3" type="audio/mpeg">
-    </audio>
+      <p class="sub-title">「This time, together with me…」</p>
+      <p class="sub-title">「Let’s write a new chapter of the story♪」</p>
+      <p class="sub-title tips"></p>
+    </div>
+        
+    <div class="meta-row" role="contentinfo" aria-label="Site meta">
+      <div class="icp-box">
+        <a class="meta-badge icp"
+            href="https://icp.gov.moe/?keyword=20257728"
+            target="_blank"
+            rel="noopener noreferrer">
+          萌ICP备20257728号
+        </a>
+      </div>
 
-    <footer class="footer">
-        © This website is solely dedicated to documenting the 28-year promise between Shizuku Lulu and the Lulumins.
-    </footer>
+      <a class="meta-badge email" href="/cdn-cgi/l/email-protection#f3c4c5c1cac0c3c4c6c5b38282dd909c9e" aria-label="Email: 762930756@qq.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z" fill="currentColor"/>
+        </svg>
+        <span><span class="__cf_email__" data-cfemail="566160646f65666163601627277835393b">[email&#160;protected]</span></span>
+      </a>
+    </div>
+        
+    <div class="music-control">
+      <img id="music-btn" src="resources/images/musicon.webp" alt="Music Toggle">
+    </div>
+  </div>
+  <audio id="bg-music" preload="none" loop>
+    <source src="resources/audio/true.mp3" type="audio/mpeg">
+  </audio>
 
-    <script src="resources/js/jquery-3.2.1.min.js"></script>
-    <script src="resources/js/index.js"></script>
+  <footer class="footer">
+    © This website is solely dedicated to documenting the 28-year promise between Shizuku Lulu and the Lulumins.
+    The copyright for all materials on this website belongs to Shizuku Lulu.
+  </footer>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="resources/js/jquery-3.2.1.min.js" defer></script>
+  <script src="resources/js/index.js" defer></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"7fa007fdabd448dda0d5b4b9cd00e6a3","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
