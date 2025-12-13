@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>28年后 你还会想起我吗</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="resources/css/index.css">
+    <link rel="icon" href="resources/images/logo.png" type="image/png">
+</head>
+<body>
+    <div id="intro">
+        <div class="intro-inner" role="dialog" aria-label="Intro">
+            <div class="intro-line">
+                <span>Hello World</span>
+                <span class="dots" aria-hidden="true"></span>
+                <span class="caret" aria-hidden="true"></span>
+            </div>
+            <div class="intro-hint" aria-hidden="true">Please Press Any Key♪</div>
+        </div>
+    </div>
+
+    <div class="background">
+        <video
+            id="bg-video"
+            class="background-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            x5-playsinline="true"
+            x5-video-player-type="h5"
+            preload="auto"
+            disablepictureinpicture
+            controlsList="nodownload nofullscreen noremoteplayback"
+            data-desktop-src="resources/images/cyrene.mp4"
+            data-mobile-src="resources/images/lulu.mp4"
+            src="resources/images/cyrene.mp4">
+        </video>
+        
+        <div class="lang-switch">
+            <span id="switch-en" role="button" tabindex="0">EN</span> |
+            <span id="switch-zh" role="button" tabindex="0">ZH</span>
+        </div>
+        
+        <div class="gradient-overlay"></div>
+        
+        <div class="content">
+            <h2 class="title">H E L L O &nbsp; W O R L D</h2>
+            <div class="time-box">
+                <div class="days"><p class="day value">00</p><span class="text">days</span></div>
+                <div class="hours"><p class="hour value">00</p><span class="text">hours</span></div>
+                <div class="mins"><p class="min value">00</p><span class="text">min</span></div>
+                <div class="secs"><p class="sec value">00</p><span class="text">sec</span></div>
+            </div>
+            <p class="sub-title">「This time, together with me…」</p>
+            <p class="sub-title">「Let’s write a new chapter of the story♪」</p>
+            <p class="sub-title tips"></p>
+        </div>
+        
+        <div class="meta-row">
+            <div class="icp-box">
+                <a class="meta-badge icp" href="https://icp.gov.moe/?keyword=20257728" target="_blank">萌ICP备20257728号</a>
+            </div>
+            <a class="meta-badge email" href="mailto:762930756@qq.com">
+                <svg width="16" height="16" viewBox="0 0 24 24"><path d="M2 5h20v14H2V5zm2 2v10h16V7l-8 5L4 7z" fill="currentColor"/></svg>
+                <span>762930756@qq.com</span>
+            </a>
+        </div>
+        
+        <div class="music-control">
+            <img id="music-btn" src="resources/images/musicon.webp" alt="Music Toggle">
+        </div>
+    </div>
+
+    <audio id="bg-music" preload="none" loop>
+        <source src="resources/audio/true.mp3" type="audio/mpeg">
+    </audio>
+
+    <footer class="footer">
+        © This website is solely dedicated to documenting the 28-year promise between Shizuku Lulu and the Lulumins.
+    The copyright for all materials on this website belongs to Shizuku Lulu.
+    </footer>
+
+    <script src="resources/js/jquery-3.2.1.min.js"></script>
+    <script src="resources/js/index.js"></script>
+</body>
+</html>
+
